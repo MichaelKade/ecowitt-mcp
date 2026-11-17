@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "ecowitt": {
+      "type": "http",
+      "url": "${ECOWITT_MCP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${ECOWITT_MCP_TOKEN}"
+      }
+    }
+  }
+}

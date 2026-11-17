@@ -20,6 +20,54 @@ Requires a valid Ecowitt Application Key and API Key. Visit [Private Center in e
 }
 ```
 
+## Private hosted deployment (HTTP)
+
+`src/server/http.js` serves the same tools over MCP Streamable HTTP at `POST /mcp`
+(stateless), with a health check at `GET /healthz`. Every MCP request must carry the
+shared secret `MCP_AUTH_TOKEN`, either as `Authorization: Bearer <token>` or as a path
+segment (`/mcp/<token>`) for clients that only accept a URL. The server refuses to start
+without a token of at least 32 characters.
+
+### Deploy to Render
+
+1. In Render: **New → Blueprint**, pick this repository. `render.yaml` defines a Docker web service.
+2. Render prompts for `ECOWITT_APPLICATION_KEY` and `ECOWITT_API_KEY`. Enter them there;
+   they are stored as encrypted secrets and never committed. `MCP_AUTH_TOKEN` is generated for you.
+3. After the deploy, copy `MCP_AUTH_TOKEN` from the service's **Environment** tab. Your endpoint is
+   `https://<service>.onrender.com/mcp`.
+
+The free plan sleeps after ~15 minutes idle, so the first call after a pause can take about a minute.
+Choose a paid instance type if that's a problem.
+
+### Connect a client
+
+**Claude Code plugin** (this repo is also a plugin marketplace):
+
+```bash
+export ECOWITT_MCP_URL="https://<service>.onrender.com/mcp"
+export ECOWITT_MCP_TOKEN="<MCP_AUTH_TOKEN>"
+claude plugin marketplace add MichaelKade/ecowitt-mcp
+claude plugin install ecowitt@ecowitt-private
+```
+
+**Claude Code, without the plugin:**
+
+```bash
+claude mcp add --transport http ecowitt https://<service>.onrender.com/mcp \
+  --header "Authorization: Bearer <MCP_AUTH_TOKEN>"
+```
+
+**claude.ai / Claude Desktop custom connector:** use the URL
+`https://<service>.onrender.com/mcp/<MCP_AUTH_TOKEN>` (URL-encode the token if it contains `/` or `+`).
+Treat that URL like a password.
+
+### Run locally
+
+```bash
+cp .env.example .env   # fill in keys and MCP_AUTH_TOKEN (openssl rand -hex 32)
+npm run start:http
+```
+
 ## Available Tools
 
 - **get_devices** - Get all your weather stations and sensors

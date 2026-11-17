@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node --env-file=.env src/server/index.js",
+    "start:http": "node --env-file=.env src/server/http.js",
     "test": "vitest",
     "test:run": "vitest run",
     "lint": "biome check .",

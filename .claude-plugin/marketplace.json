@@ -1,0 +1,11 @@
+{
+  "name": "ecowitt-private",
+  "owner": { "name": "MichaelKade" },
+  "plugins": [
+    {
+      "name": "ecowitt",
+      "source": "./plugin",
+      "description": "Private Ecowitt weather station tools (current readings and history) via your hosted MCP server."
+    }
+  ]
+}

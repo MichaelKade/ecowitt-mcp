@@ -1,0 +1,19 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Secrets marked `sync: false` are entered privately in the Render dashboard
+# when the Blueprint is first applied; they are never stored in this repo.
+services:
+  - type: web
+    name: ecowitt-mcp
+    runtime: docker
+    plan: free
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: ECOWITT_APPLICATION_KEY
+        sync: false
+      - key: ECOWITT_API_KEY
+        sync: false
+      # Shared secret MCP clients must send. Render generates a random value;
+      # copy it from the service's Environment tab.
+      - key: MCP_AUTH_TOKEN
+        generateValue: true

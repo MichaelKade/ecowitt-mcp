@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { clearConfigCache, getConfig } from "../src/config/index.js";
-import { createMCPServer } from "../src/server/index.js";
+import { createMCPServer } from "../src/server/create.js";
 
 describe("Integration Tests", () => {
   describe("Server Creation with Lazy-Loaded Config", () => {

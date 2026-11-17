@@ -1,0 +1,5 @@
+{
+  "name": "ecowitt",
+  "version": "1.1.0",
+  "description": "Current readings and historical temperature/humidity from your Ecowitt weather stations, served by your private hosted MCP server."
+}
